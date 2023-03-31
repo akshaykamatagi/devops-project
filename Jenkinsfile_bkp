@@ -1,12 +1,12 @@
 pipeline {
     agent any
-    tools {
-        maven 'MAVEN'
-        jdk 'JAVA'
+    tools { 
+        maven 'MAVEN' 
+        jdk 'JAVA' 
     }
-    environment {
-    DOCKERHUB_CREDENTIALS= credentials('dockerhubcreds')
-  }
+    environment {     
+    DOCKERHUB_CREDENTIALS= credentials('dockerhubcreds')     
+  }    
     stages {
      stage ('Build the source code') {
       steps {
@@ -15,9 +15,9 @@ pipeline {
     }
 
      stage('Copy Artifact') {
-      steps {
+      steps { 
                  sh 'pwd'
-                 sh 'cp -r target/*.jar docker'
+		 sh 'cp -r target/*.jar docker'
            }
         }
 
@@ -27,7 +27,7 @@ pipeline {
                     sh 'docker build -t 7989766/devops-project:$BUILD_NUMBER .'
             }
         }
-
+         
      stage('Push the image to docker hub image registry') {
       steps {
                     sh 'docker login'
@@ -35,17 +35,16 @@ pipeline {
                     echo "login successful!"
             }
         }
-
-     stage('Push Image to Docker Hub') {
-      steps{
-                    sh 'docker push 7989766/devops-project:$BUILD_NUMBER'
-                    echo 'Push Image Completed'
-      }
-    }
-    } 
+     
+     stage('Push Image to Docker Hub') {         
+      steps{                            
+	            sh 'docker push 7989766/devops-project:$BUILD_NUMBER'                 
+                    echo 'Push Image Completed'       
+      }           
+    }      
     post{
-    always {
-      sh 'docker logout'
-    }
-  }
-    }
+    always {  
+      sh 'docker logout'           
+    }      
+  }  
+
