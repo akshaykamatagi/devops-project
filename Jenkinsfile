@@ -30,7 +30,6 @@ pipeline {
 
      stage('Push the image to docker hub image registry') {
       steps {
-                    sh 'docker login'
                     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                     echo "login successful!"
             }
