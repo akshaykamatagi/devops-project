@@ -23,7 +23,8 @@ pipeline {
 
      stage('Docker Build') {
       steps {
-                    sh 'docker build 7989766/devops-project:$BUILD_NUMBER docker/'
+                    sh 'chmod 755 docker/*'
+                    sh 'docker build 7989766/devops-project:$BUILD_NUMBER docker/Dockerfile'
             }
         }
 
