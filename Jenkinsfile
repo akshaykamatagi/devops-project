@@ -25,7 +25,7 @@ pipeline {
      stage('Build and Push Image to Docker Hub') {
       steps{
                  script {         
-                 def customImage = docker.build('7989766/devops-project:$BUILD_NUMBER', "./docker")
+                     def customImage = docker.build('7989766/devops-project:${env.BUILD_NUMBER}', "./docker")
                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                  customImage.push("${env.BUILD_NUMBER}")
                  }                     
