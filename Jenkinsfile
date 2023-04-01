@@ -21,24 +21,15 @@ pipeline {
            }
         }
 
-     stage('Docker Build') {
-      steps {
-                    sh 'pwd'
-                    sh 'docker build -t 7989766/devops-project:$BUILD_NUMBER docker/'
-            }
-        }
 
-     stage('Push the image to docker hub image registry') {
-      steps {
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    echo "login successful!"
-            }
-        }
-
-     stage('Push Image to Docker Hub') {
+     stage('Build and Push Image to Docker Hub') {
       steps{
-                    sh 'docker push 7989766/devops-project:$BUILD_NUMBER'
-                    echo 'Push Image Completed'
+                 script {         
+                 def customImage = docker.build('7989766/devops-project', "./docker")
+                 docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                 customImage.push("${env.BUILD_NUMBER}")
+                 }                     
+           }
       }
     }
     } 
