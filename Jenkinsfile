@@ -23,9 +23,8 @@ pipeline {
 
      stage('Docker Build') {
       steps {
-                    sh 'cd docker'
                     sh 'pwd'
-                    sh 'docker build 7989766/devops-project:$BUILD_NUMBER .'
+                    sh 'docker build -t 7989766/devops-project:$BUILD_NUMBER docker/'
             }
         }
 
